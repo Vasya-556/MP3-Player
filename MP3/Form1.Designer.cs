@@ -34,19 +34,12 @@ namespace MP3
             this.play_chb = new System.Windows.Forms.CheckBox();
             this.open_btn = new System.Windows.Forms.Button();
             this.down_btn = new System.Windows.Forms.Button();
-            this.volumeGB = new System.Windows.Forms.GroupBox();
-            this.volume = new System.Windows.Forms.TrackBar();
             this.audio_progress = new System.Windows.Forms.TrackBar();
-            this.PL_GB = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.T_GB = new System.Windows.Forms.GroupBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.PL_btn = new System.Windows.Forms.Button();
-            this.volumeGB.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.volume)).BeginInit();
+            this.button1 = new System.Windows.Forms.Button();
+            this.volume = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.audio_progress)).BeginInit();
-            this.PL_GB.SuspendLayout();
-            this.T_GB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.volume)).BeginInit();
             this.SuspendLayout();
             // 
             // prev_btn
@@ -95,26 +88,6 @@ namespace MP3
             this.down_btn.Text = "download";
             this.down_btn.UseVisualStyleBackColor = true;
             // 
-            // volumeGB
-            // 
-            this.volumeGB.Controls.Add(this.volume);
-            this.volumeGB.Location = new System.Drawing.Point(47, 327);
-            this.volumeGB.Margin = new System.Windows.Forms.Padding(4);
-            this.volumeGB.Name = "volumeGB";
-            this.volumeGB.Padding = new System.Windows.Forms.Padding(4);
-            this.volumeGB.Size = new System.Drawing.Size(209, 87);
-            this.volumeGB.TabIndex = 10;
-            this.volumeGB.TabStop = false;
-            this.volumeGB.Text = "Volume";
-            // 
-            // volume
-            // 
-            this.volume.Location = new System.Drawing.Point(7, 22);
-            this.volume.Name = "volume";
-            this.volume.Size = new System.Drawing.Size(195, 56);
-            this.volume.TabIndex = 11;
-            this.volume.Value = 5;
-            // 
             // audio_progress
             // 
             this.audio_progress.Location = new System.Drawing.Point(36, 230);
@@ -123,61 +96,41 @@ namespace MP3
             this.audio_progress.TabIndex = 12;
             this.audio_progress.TickFrequency = 0;
             // 
-            // PL_GB
-            // 
-            this.PL_GB.Controls.Add(this.comboBox1);
-            this.PL_GB.Location = new System.Drawing.Point(296, 348);
-            this.PL_GB.Name = "PL_GB";
-            this.PL_GB.Size = new System.Drawing.Size(200, 57);
-            this.PL_GB.TabIndex = 14;
-            this.PL_GB.TabStop = false;
-            this.PL_GB.Text = "groupBox1";
-            // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 22);
+            this.comboBox1.Location = new System.Drawing.Point(415, 370);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(188, 24);
             this.comboBox1.TabIndex = 0;
             // 
-            // T_GB
+            // button1
             // 
-            this.T_GB.Controls.Add(this.comboBox2);
-            this.T_GB.Location = new System.Drawing.Point(527, 348);
-            this.T_GB.Name = "T_GB";
-            this.T_GB.Size = new System.Drawing.Size(200, 57);
-            this.T_GB.TabIndex = 15;
-            this.T_GB.TabStop = false;
-            this.T_GB.Text = "groupBox2";
+            this.button1.Location = new System.Drawing.Point(493, 51);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // comboBox2
+            // volume
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(6, 22);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(188, 24);
-            this.comboBox2.TabIndex = 0;
-            // 
-            // PL_btn
-            // 
-            this.PL_btn.Location = new System.Drawing.Point(36, 79);
-            this.PL_btn.Name = "PL_btn";
-            this.PL_btn.Size = new System.Drawing.Size(75, 23);
-            this.PL_btn.TabIndex = 16;
-            this.PL_btn.Text = "Playlist";
-            this.PL_btn.UseVisualStyleBackColor = true;
+            this.volume.Location = new System.Drawing.Point(36, 338);
+            this.volume.Name = "volume";
+            this.volume.Size = new System.Drawing.Size(195, 56);
+            this.volume.TabIndex = 11;
+            this.volume.Value = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.PL_btn);
-            this.Controls.Add(this.T_GB);
-            this.Controls.Add(this.PL_GB);
+            this.Controls.Add(this.volume);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.audio_progress);
-            this.Controls.Add(this.volumeGB);
             this.Controls.Add(this.down_btn);
             this.Controls.Add(this.open_btn);
             this.Controls.Add(this.play_chb);
@@ -185,12 +138,8 @@ namespace MP3
             this.Controls.Add(this.prev_btn);
             this.Name = "Form1";
             this.Text = "MP3 Player";
-            this.volumeGB.ResumeLayout(false);
-            this.volumeGB.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.volume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.audio_progress)).EndInit();
-            this.PL_GB.ResumeLayout(false);
-            this.T_GB.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.volume)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,14 +151,10 @@ namespace MP3
         private System.Windows.Forms.CheckBox play_chb;
         private System.Windows.Forms.Button open_btn;
         private System.Windows.Forms.Button down_btn;
-        private System.Windows.Forms.GroupBox volumeGB;
-        private System.Windows.Forms.TrackBar volume;
         private System.Windows.Forms.TrackBar audio_progress;
-        private System.Windows.Forms.GroupBox PL_GB;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.GroupBox T_GB;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button PL_btn;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TrackBar volume;
     }
 }
 

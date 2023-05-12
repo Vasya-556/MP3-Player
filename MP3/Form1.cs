@@ -20,18 +20,12 @@ namespace MP3
 
         public Form1()
         {
-            /*
-            PL_GB - playlist group box
-            T_GB - treck group box
-            PL_btn - open playlist window
-             */
             InitializeComponent();
             play_chb.CheckedChanged += CentralizedEventHandler1;
             next_btn.Click += CentralizedEventHandler1;
             prev_btn.Click += CentralizedEventHandler1;
             open_btn.Click += CentralizedEventHandler1;
             down_btn.Click += CentralizedEventHandler1;
-            PL_btn.Click += CentralizedEventHandler1;
             audio_progress.MouseDown += TrackBar1_MouseDown;
             audio_progress.MouseUp += TrackBar1_MouseUp;
             volume.Scroll += TrackBar2_Scroll;
@@ -68,6 +62,7 @@ namespace MP3
             if (outputDevice != null)
                 outputDevice.Pause();
         }
+                
         private void CentralizedEventHandler1(object sender, EventArgs e)
         {
             if(sender == play_chb)
@@ -146,14 +141,6 @@ namespace MP3
                 d.Show();
                 d.Activate();
             }
-            else if(sender == PL_btn)
-            {
-                //Playlist p = new Playlist();
-                //if (p == null)
-                //    p = new Playlist();
-                //p.Show();
-                //p.Activate();
-            }
             else if(sender == next_btn)
             {
                 if (comboBox1.Items.Count > 0)
@@ -193,6 +180,69 @@ namespace MP3
                         outputDevice.Play();
                     }
                 }
+            }
+        }
+        private int currentSongIndex = 0;
+        private void PlayCurrentSong()
+        {
+            
+        }
+
+        private void PlayAllSongsInOrder()
+        {
+            if (comboBox1.Items.Count > 0)
+            {
+                // Select the next song in the list
+                currentSongIndex++;
+
+                // Check if we've reached the end of the list
+                if (currentSongIndex >= comboBox1.Items.Count)
+                {
+                    // Wrap around to the beginning of the list
+                    currentSongIndex = 0;
+                }
+
+                // Set the selected item in the combo box to the next song
+                comboBox1.SelectedIndex = currentSongIndex;
+
+                // Start playing the next song
+                outputDevice.Play();
+            }
+        }
+        private void PlayAllSongsRandomly()
+        {
+            if (comboBox1.Items.Count > 0)
+            {
+                // Generate a random index into the list of songs
+                int randomIndex = new Random().Next(comboBox1.Items.Count);
+
+                // Select the random song in the list
+                comboBox1.SelectedIndex = randomIndex;
+
+                // Start playing the random song
+                outputDevice.Play();
+            }
+        }
+
+        int btn1 = 0;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            btn1++;
+            if (btn1 == 1)
+            {
+                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
+                PlayCurrentSong();
+            }
+            else if (btn1 == 2)
+            {
+                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\4.jpg");
+                PlayAllSongsInOrder();
+            }
+            else if (btn1 == 3)
+            {
+                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
+                PlayAllSongsRandomly();
+                btn1 = 0;
             }
         }
     }
