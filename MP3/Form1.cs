@@ -29,6 +29,7 @@ namespace MP3
             audio_progress.MouseDown += TrackBar1_MouseDown;
             audio_progress.MouseUp += TrackBar1_MouseUp;
             volume.Scroll += TrackBar2_Scroll;
+            comboBox1.SelectedIndexChanged += CentralizedEventHandler1;
 
             timer = new Timer();
             timer.Interval = 100;
@@ -65,7 +66,7 @@ namespace MP3
                 
         private void CentralizedEventHandler1(object sender, EventArgs e)
         {
-            if(sender == play_chb)
+            if (sender == play_chb)
             {
                 if (play_chb.Checked)
                 {
@@ -74,21 +75,24 @@ namespace MP3
                     if (outputDevice == null || outputDevice.PlaybackState == PlaybackState.Stopped)
                     {
                         // Load the audio file
-                        string audioFilePath = comboBox1.SelectedItem.ToString();
+                        if (comboBox1.SelectedItem != null)
+                        {
+                            string audioFilePath = comboBox1.SelectedItem.ToString();
+                            audioFile = new AudioFileReader(audioFilePath);
 
-                        audioFile = new AudioFileReader(audioFilePath);
+                            // Create a new output device and set its audio source
+                            outputDevice = new WaveOutEvent();
+                            outputDevice.Init(audioFile);
 
-                        // Create a new output device and set its audio source
-                        outputDevice = new WaveOutEvent();
-                        outputDevice.Init(audioFile);
-
-                        // Start playing the audio
-                        outputDevice.Play();
-
+                            // Start playing the audio
+                            outputDevice.Play();
+                        }
                     }
                     // Resume playing the audio
                     else if (outputDevice.PlaybackState == PlaybackState.Paused)
+                    {
                         outputDevice.Play();
+                    }
                 }
                 else
                 {
@@ -96,7 +100,31 @@ namespace MP3
 
                     // Pause the audio playback
                     if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+                    {
                         outputDevice.Pause();
+                    }
+                }
+            }
+            else if (sender == comboBox1)
+            {
+                // Stop the audio playback if it's currently playing or paused
+                if (outputDevice != null && (outputDevice.PlaybackState == PlaybackState.Playing || outputDevice.PlaybackState == PlaybackState.Paused))
+                {
+                    outputDevice.Stop();
+                }
+
+                // Load and play the selected song
+                if (comboBox1.SelectedItem != null && play_chb.Checked)
+                {
+                    string audioFilePath = comboBox1.SelectedItem.ToString();
+                    audioFile = new AudioFileReader(audioFilePath);
+
+                    // Create a new output device and set its audio source
+                    outputDevice = new WaveOutEvent();
+                    outputDevice.Init(audioFile);
+
+                    // Start playing the audio
+                    outputDevice.Play();
                 }
             }
             else if(sender == open_btn)
