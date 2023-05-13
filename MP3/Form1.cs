@@ -40,6 +40,44 @@ namespace MP3
             if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
                 audio_progress.Value = (int)(audioFile.CurrentTime.TotalSeconds / audioFile.TotalTime.TotalSeconds * audio_progress.Maximum);
 
+            if (ModeChange == 1)
+                if ((audio_progress.Value == audio_progress.Maximum - 1) || (audio_progress.Value == audio_progress.Maximum))
+                {
+                    // Restart playing the current song
+                    outputDevice.Stop();
+                    audioFile.Position = 0;  // Reset the position to the beginning
+                    outputDevice.Play();
+                }
+            if (ModeChange == 2)
+                if ((audio_progress.Value == audio_progress.Maximum - 1) || (audio_progress.Value == audio_progress.Maximum))
+                {
+                    // Get the index of the current song in the ComboBox
+                    int currentIndex = comboBox1.SelectedIndex;
+
+                    // Check if there is a next song available
+                    if (currentIndex < comboBox1.Items.Count - 1)
+                    {
+                        // Select the next song in the ComboBox
+                        comboBox1.SelectedIndex = currentIndex + 1;
+
+                        play_chb.CheckedChanged += CentralizedEventHandler1;
+                    }
+                }
+
+            if (ModeChange == 3)
+                if (audio_progress.Value == (audio_progress.Maximum - 1) || audio_progress.Value == audio_progress.Maximum)
+                {
+                    // Stop the current song
+                    outputDevice.Stop();
+                    audioFile.Position = 0;  // Reset the position to the beginning
+
+                    // Play a random song from the ComboBox
+                    if (comboBox1.Items.Count > 0)
+                    {
+                        
+                    }
+                }
+
         }
 
         private void TrackBar2_Scroll(object sender, EventArgs e)
@@ -64,11 +102,11 @@ namespace MP3
         {
             if (outputDevice != null) {
                 timer.Stop();
-         
+
                 outputDevice.Pause();
             }
         }
-                
+
         private void CentralizedEventHandler1(object sender, EventArgs e)
         {
             if (sender == play_chb)
@@ -132,7 +170,7 @@ namespace MP3
                     outputDevice.Play();
                 }
             }
-            else if(sender == open_btn)
+            else if (sender == open_btn)
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -166,7 +204,7 @@ namespace MP3
                     }
                 }
             }
-            else if(sender == down_btn)
+            else if (sender == down_btn)
             {
                 Download d = new Download();
                 if (d == null)
@@ -174,7 +212,7 @@ namespace MP3
                 d.Show();
                 d.Activate();
             }
-            else if(sender == next_btn)
+            else if (sender == next_btn)
             {
                 if (comboBox1.Items.Count > 0)
                 {
@@ -218,7 +256,13 @@ namespace MP3
         private int currentSongIndex = 0;
         private void PlayCurrentSong()
         {
-            
+            if (audio_progress.Value == audio_progress.Maximum)
+            {
+                // Restart playing the current song
+                outputDevice.Stop();
+                audioFile.Position = 0;  // Reset the position to the beginning
+                outputDevice.Play();
+            }
         }
 
         private void PlayAllSongsInOrder()
@@ -261,22 +305,24 @@ namespace MP3
         private void button1_Click(object sender, EventArgs e)
         {
             ModeChange++;
-            if (ModeChange == 1)
+            if (ModeChange == 1 || ModeChange > 4)
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
-                PlayCurrentSong();
             }
             else if (ModeChange == 2)
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\4.jpg");
-                PlayAllSongsInOrder();
             }
             else if (ModeChange == 3)
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
-                PlayAllSongsRandomly();
+                //PlayAllSongsRandomly();
+            }
+            else if (ModeChange == 4)
+            {
                 ModeChange = 0;
             }
+
         }
     }
 }
