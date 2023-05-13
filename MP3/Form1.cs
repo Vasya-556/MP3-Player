@@ -39,6 +39,7 @@ namespace MP3
         {
             if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
                 audio_progress.Value = (int)(audioFile.CurrentTime.TotalSeconds / audioFile.TotalTime.TotalSeconds * audio_progress.Maximum);
+
         }
 
         private void TrackBar2_Scroll(object sender, EventArgs e)
@@ -55,13 +56,17 @@ namespace MP3
                 outputDevice.Stop();
                 audioFile.CurrentTime = newPosition;
                 outputDevice.Play();
+                timer.Start();
             }
         }
 
         private void TrackBar1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (outputDevice != null)
+            if (outputDevice != null) {
+                timer.Stop();
+         
                 outputDevice.Pause();
+            }
         }
                 
         private void CentralizedEventHandler1(object sender, EventArgs e)
@@ -252,25 +257,25 @@ namespace MP3
             }
         }
 
-        int btn1 = 0;
+        int ModeChange = 0;
         private void button1_Click(object sender, EventArgs e)
         {
-            btn1++;
-            if (btn1 == 1)
+            ModeChange++;
+            if (ModeChange == 1)
             {
-                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
                 PlayCurrentSong();
             }
-            else if (btn1 == 2)
+            else if (ModeChange == 2)
             {
-                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\4.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\4.jpg");
                 PlayAllSongsInOrder();
             }
-            else if (btn1 == 3)
+            else if (ModeChange == 3)
             {
-                button1.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
                 PlayAllSongsRandomly();
-                btn1 = 0;
+                ModeChange = 0;
             }
         }
     }

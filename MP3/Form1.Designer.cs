@@ -36,7 +36,7 @@ namespace MP3
             this.down_btn = new System.Windows.Forms.Button();
             this.audio_progress = new System.Windows.Forms.TrackBar();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.ModeChange_btn = new System.Windows.Forms.Button();
             this.volume = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.audio_progress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volume)).BeginInit();
@@ -91,8 +91,9 @@ namespace MP3
             // audio_progress
             // 
             this.audio_progress.Location = new System.Drawing.Point(36, 230);
+            this.audio_progress.Maximum = 300;
             this.audio_progress.Name = "audio_progress";
-            this.audio_progress.Size = new System.Drawing.Size(163, 56);
+            this.audio_progress.Size = new System.Drawing.Size(730, 56);
             this.audio_progress.TabIndex = 12;
             this.audio_progress.TickFrequency = 0;
             // 
@@ -104,15 +105,15 @@ namespace MP3
             this.comboBox1.Size = new System.Drawing.Size(188, 24);
             this.comboBox1.TabIndex = 0;
             // 
-            // button1
+            // ModeChange_btn
             // 
-            this.button1.Location = new System.Drawing.Point(493, 51);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.ModeChange_btn.Location = new System.Drawing.Point(493, 51);
+            this.ModeChange_btn.Name = "ModeChange_btn";
+            this.ModeChange_btn.Size = new System.Drawing.Size(75, 23);
+            this.ModeChange_btn.TabIndex = 13;
+            this.ModeChange_btn.Text = "button1";
+            this.ModeChange_btn.UseVisualStyleBackColor = true;
+            this.ModeChange_btn.Click += new System.EventHandler(this.button1_Click);
             // 
             // volume
             // 
@@ -128,7 +129,7 @@ namespace MP3
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.volume);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.ModeChange_btn);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.audio_progress);
             this.Controls.Add(this.down_btn);
@@ -153,7 +154,7 @@ namespace MP3
         private System.Windows.Forms.Button down_btn;
         private System.Windows.Forms.TrackBar audio_progress;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button ModeChange_btn;
         private System.Windows.Forms.TrackBar volume;
     }
 }
