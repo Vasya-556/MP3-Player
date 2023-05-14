@@ -34,7 +34,9 @@ namespace MP3
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
+
         }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
@@ -70,7 +72,6 @@ namespace MP3
                     // Stop the current song
                     outputDevice.Stop();
                     audioFile.Position = 0;  // Reset the position to the beginning
-                    int lastIndex = comboBox1.Items.Count - 1;
 
                     // Play a random song from the ComboBox
                     if (comboBox1.Items.Count > 0)
@@ -81,10 +82,8 @@ namespace MP3
                         string audioFilePath = comboBox1.SelectedItem.ToString();
                         audioFile = new AudioFileReader(audioFilePath);
                         outputDevice.Play();
-
                     }
                 }
-
         }
 
         private void TrackBar2_Scroll(object sender, EventArgs e)
@@ -136,6 +135,10 @@ namespace MP3
 
                             // Start playing the audio
                             outputDevice.Play();
+                            
+                            string selectedFilePath = comboBox1.SelectedItem.ToString();
+                            string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
+                            label1.Text = selectedFileName;
                         }
                     }
                     // Resume playing the audio
@@ -175,6 +178,12 @@ namespace MP3
 
                     // Start playing the audio
                     outputDevice.Play();
+                }
+                if (comboBox1.SelectedItem != null)
+                {
+                    string selectedFilePath = comboBox1.SelectedItem.ToString();
+                    string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
+                    label1.Text = selectedFileName;
                 }
             }
             else if (sender == open_btn)
@@ -223,91 +232,73 @@ namespace MP3
             {
                 if (comboBox1.Items.Count > 0)
                 {
-                    int currentIndex = comboBox1.SelectedIndex;
-                    if (currentIndex == -1 || currentIndex == comboBox1.Items.Count - 1)
-                        currentIndex = 0;
-                    else
-                        currentIndex++;
-                    comboBox1.SelectedIndex = currentIndex;
-                    if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+                    if (ModeChange == 3)
                     {
-                        outputDevice.Stop();
-                        string audioFilePath = comboBox1.SelectedItem.ToString();
-                        audioFile = new AudioFileReader(audioFilePath);
-                        outputDevice.Init(audioFile);
-                        outputDevice.Play();
+                        if (comboBox1.Items.Count > 0)
+                        {
+                            Random random = new Random();
+                            int randomIndex = random.Next(0, comboBox1.Items.Count);
+                            comboBox1.SelectedIndex = randomIndex;
+                            string audioFilePath = comboBox1.SelectedItem.ToString();
+                            audioFile = new AudioFileReader(audioFilePath);
+                            outputDevice.Play();
+                        }
+                    }
+                    else
+                    {
+                        int currentIndex = comboBox1.SelectedIndex;
+                        if (currentIndex == -1 || currentIndex == comboBox1.Items.Count - 1)
+                            currentIndex = 0;
+                        else
+                            currentIndex++;
+                        comboBox1.SelectedIndex = currentIndex;
+                        if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            outputDevice.Stop();
+                            string audioFilePath = comboBox1.SelectedItem.ToString();
+                            audioFile = new AudioFileReader(audioFilePath);
+                            outputDevice.Init(audioFile);
+                            outputDevice.Play();
+                        }
                     }
                 }
             }
             else if (sender == prev_btn)
             {
-                if (comboBox1.Items.Count > 0)
+                if (ModeChange == 3)
                 {
-                    int currentIndex = comboBox1.SelectedIndex;
-                    if (currentIndex == -1 || currentIndex == 0)
-                        currentIndex = comboBox1.Items.Count - 1;
-                    else
-                        currentIndex--;
-                    comboBox1.SelectedIndex = currentIndex;
-                    if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+                    if (comboBox1.Items.Count > 0)
                     {
-                        outputDevice.Stop();
+                        Random random = new Random();
+                        int randomIndex = random.Next(0, comboBox1.Items.Count);
+                        comboBox1.SelectedIndex = randomIndex;
                         string audioFilePath = comboBox1.SelectedItem.ToString();
                         audioFile = new AudioFileReader(audioFilePath);
-                        outputDevice.Init(audioFile);
                         outputDevice.Play();
+                    }
+                }
+                else
+                {
+                    if (comboBox1.Items.Count > 0)
+                    {
+                        int currentIndex = comboBox1.SelectedIndex;
+                        if (currentIndex == -1 || currentIndex == 0)
+                            currentIndex = comboBox1.Items.Count - 1;
+                        else
+                            currentIndex--;
+                        comboBox1.SelectedIndex = currentIndex;
+                        if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
+                        {
+                            outputDevice.Stop();
+                            string audioFilePath = comboBox1.SelectedItem.ToString();
+                            audioFile = new AudioFileReader(audioFilePath);
+                            outputDevice.Init(audioFile);
+                            outputDevice.Play();
+                        }
                     }
                 }
             }
         }
-        private int currentSongIndex = 0;
-        private void PlayCurrentSong()
-        {
-            if (audio_progress.Value == audio_progress.Maximum)
-            {
-                // Restart playing the current song
-                outputDevice.Stop();
-                audioFile.Position = 0;  // Reset the position to the beginning
-                outputDevice.Play();
-            }
-        }
-
-        private void PlayAllSongsInOrder()
-        {
-            if (comboBox1.Items.Count > 0)
-            {
-                // Select the next song in the list
-                currentSongIndex++;
-
-                // Check if we've reached the end of the list
-                if (currentSongIndex >= comboBox1.Items.Count)
-                {
-                    // Wrap around to the beginning of the list
-                    currentSongIndex = 0;
-                }
-
-                // Set the selected item in the combo box to the next song
-                comboBox1.SelectedIndex = currentSongIndex;
-
-                // Start playing the next song
-                outputDevice.Play();
-            }
-        }
-        private void PlayAllSongsRandomly()
-        {
-            if (comboBox1.Items.Count > 0)
-            {
-                // Generate a random index into the list of songs
-                int randomIndex = new Random().Next(comboBox1.Items.Count);
-
-                // Select the random song in the list
-                comboBox1.SelectedIndex = randomIndex;
-
-                // Start playing the random song
-                outputDevice.Play();
-            }
-        }
-
         int ModeChange = 0;
         private void button1_Click(object sender, EventArgs e)
         {

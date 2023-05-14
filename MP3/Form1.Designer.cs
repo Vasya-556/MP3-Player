@@ -38,6 +38,7 @@ namespace MP3
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.ModeChange_btn = new System.Windows.Forms.Button();
             this.volume = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.audio_progress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.volume)).BeginInit();
             this.SuspendLayout();
@@ -123,11 +124,21 @@ namespace MP3
             this.volume.TabIndex = 11;
             this.volume.Value = 5;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(152, 76);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "label1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.volume);
             this.Controls.Add(this.ModeChange_btn);
             this.Controls.Add(this.comboBox1);
@@ -156,6 +167,7 @@ namespace MP3
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button ModeChange_btn;
         private System.Windows.Forms.TrackBar volume;
+        private System.Windows.Forms.Label label1;
     }
 }
 
