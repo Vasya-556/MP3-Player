@@ -70,11 +70,18 @@ namespace MP3
                     // Stop the current song
                     outputDevice.Stop();
                     audioFile.Position = 0;  // Reset the position to the beginning
+                    int lastIndex = comboBox1.Items.Count - 1;
 
                     // Play a random song from the ComboBox
                     if (comboBox1.Items.Count > 0)
                     {
-                        
+                        Random random = new Random();
+                        int randomIndex = random.Next(0, comboBox1.Items.Count);
+                        comboBox1.SelectedIndex = randomIndex;
+                        string audioFilePath = comboBox1.SelectedItem.ToString();
+                        audioFile = new AudioFileReader(audioFilePath);
+                        outputDevice.Play();
+
                     }
                 }
 
@@ -316,13 +323,11 @@ namespace MP3
             else if (ModeChange == 3)
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
-                //PlayAllSongsRandomly();
             }
             else if (ModeChange == 4)
             {
                 ModeChange = 0;
             }
-
         }
     }
 }
