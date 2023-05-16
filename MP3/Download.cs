@@ -28,11 +28,12 @@ namespace MP3
                 // Create a YouTube video object using the video URL
                 var video = YouTube.Default.GetVideo(videoUrl);
 
-                // Get the path to the user's desktop
-                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                // Get the directory path of the code file
+                string codeDirectory = Path.GetDirectoryName(Application.StartupPath);
 
-                // Create a directory for the audio file on the desktop
-                string audioDirectory = Path.Combine(desktopPath, "Audio");
+                // Create a directory for the audio file
+                string projectDirectory = Directory.GetParent(Directory.GetParent(Application.StartupPath).FullName).FullName;
+                string audioDirectory = Path.Combine(Directory.GetParent(projectDirectory).FullName, "Audio");
                 Directory.CreateDirectory(audioDirectory);
 
                 // Save the audio to a file in the directory
@@ -40,7 +41,6 @@ namespace MP3
                 File.WriteAllBytes(audioFilePath, video.GetBytes());
 
                 // Display a success message to the user
-                MessageBox.Show("Audio downloaded successfully to " + audioFilePath, "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

@@ -24,7 +24,7 @@ namespace MP3
             play_chb.CheckedChanged += CentralizedEventHandler1;
             next_btn.Click += CentralizedEventHandler1;
             prev_btn.Click += CentralizedEventHandler1;
-            open_btn.Click += CentralizedEventHandler1;
+            add_btn.Click += CentralizedEventHandler1;
             down_btn.Click += CentralizedEventHandler1;
             audio_progress.MouseDown += TrackBar1_MouseDown;
             audio_progress.MouseUp += TrackBar1_MouseUp;
@@ -34,7 +34,6 @@ namespace MP3
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -186,7 +185,7 @@ namespace MP3
                     label1.Text = selectedFileName;
                 }
             }
-            else if (sender == open_btn)
+            else if (sender == add_btn)
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -299,11 +298,14 @@ namespace MP3
                 }
             }
         }
-        int ModeChange = 0;
+        int ModeChange = 1;
         private void button1_Click(object sender, EventArgs e)
         {
             ModeChange++;
-            if (ModeChange == 1 || ModeChange > 4)
+            if (ModeChange > 3)
+                ModeChange = 1;
+
+            if (ModeChange == 1)
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
             }
@@ -315,10 +317,7 @@ namespace MP3
             {
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
             }
-            else if (ModeChange == 4)
-            {
-                ModeChange = 0;
-            }
         }
+
     }
 }

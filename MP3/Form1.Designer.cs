@@ -32,7 +32,7 @@ namespace MP3
             this.prev_btn = new System.Windows.Forms.Button();
             this.next_btn = new System.Windows.Forms.Button();
             this.play_chb = new System.Windows.Forms.CheckBox();
-            this.open_btn = new System.Windows.Forms.Button();
+            this.add_btn = new System.Windows.Forms.Button();
             this.down_btn = new System.Windows.Forms.Button();
             this.audio_progress = new System.Windows.Forms.TrackBar();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -71,14 +71,14 @@ namespace MP3
             this.play_chb.Text = "checkBox1";
             this.play_chb.UseVisualStyleBackColor = true;
             // 
-            // open_btn
+            // add_btn
             // 
-            this.open_btn.Location = new System.Drawing.Point(601, 184);
-            this.open_btn.Name = "open_btn";
-            this.open_btn.Size = new System.Drawing.Size(75, 23);
-            this.open_btn.TabIndex = 5;
-            this.open_btn.Text = "open";
-            this.open_btn.UseVisualStyleBackColor = true;
+            this.add_btn.Location = new System.Drawing.Point(601, 184);
+            this.add_btn.Name = "add_btn";
+            this.add_btn.Size = new System.Drawing.Size(75, 23);
+            this.add_btn.TabIndex = 5;
+            this.add_btn.Text = "Add";
+            this.add_btn.UseVisualStyleBackColor = true;
             // 
             // down_btn
             // 
@@ -126,11 +126,10 @@ namespace MP3
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(152, 76);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 14;
+            this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
             // Form1
@@ -144,7 +143,7 @@ namespace MP3
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.audio_progress);
             this.Controls.Add(this.down_btn);
-            this.Controls.Add(this.open_btn);
+            this.Controls.Add(this.add_btn);
             this.Controls.Add(this.play_chb);
             this.Controls.Add(this.next_btn);
             this.Controls.Add(this.prev_btn);
@@ -161,7 +160,7 @@ namespace MP3
         private System.Windows.Forms.Button prev_btn;
         private System.Windows.Forms.Button next_btn;
         private System.Windows.Forms.CheckBox play_chb;
-        private System.Windows.Forms.Button open_btn;
+        private System.Windows.Forms.Button add_btn;
         private System.Windows.Forms.Button down_btn;
         private System.Windows.Forms.TrackBar audio_progress;
         private System.Windows.Forms.ComboBox comboBox1;
