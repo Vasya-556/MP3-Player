@@ -34,6 +34,7 @@ namespace MP3
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -138,12 +139,14 @@ namespace MP3
                             string selectedFilePath = comboBox1.SelectedItem.ToString();
                             string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
                             label1.Text = selectedFileName;
+                            timer.Start();
                         }
                     }
                     // Resume playing the audio
                     else if (outputDevice.PlaybackState == PlaybackState.Paused)
                     {
                         outputDevice.Play();
+                        timer.Start();
                     }
                 }
                 else
@@ -153,6 +156,7 @@ namespace MP3
                     // Pause the audio playback
                     if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
                     {
+                        timer.Stop();
                         outputDevice.Pause();
                     }
                 }
@@ -214,9 +218,7 @@ namespace MP3
 
                     play_chb.Checked = false;
                     if (comboBox1.Items.Count > 0)
-                    {
                         comboBox1.SelectedIndex = 0;
-                    }
                 }
             }
             else if (sender == down_btn)
@@ -229,6 +231,8 @@ namespace MP3
             }
             else if (sender == next_btn)
             {
+                next_btn.Enabled = false;
+                prev_btn.Enabled = false;
                 if (comboBox1.Items.Count > 0)
                 {
                     if (ModeChange == 3)
@@ -261,9 +265,13 @@ namespace MP3
                         }
                     }
                 }
+                next_btn.Enabled = true;
+                prev_btn.Enabled = true;
             }
             else if (sender == prev_btn)
             {
+                next_btn.Enabled = false;
+                prev_btn.Enabled = false;
                 if (ModeChange == 3)
                 {
                     if (comboBox1.Items.Count > 0)
@@ -296,6 +304,8 @@ namespace MP3
                         }
                     }
                 }
+                next_btn.Enabled = true;
+                prev_btn.Enabled = true;
             }
         }
         int ModeChange = 1;

@@ -19,14 +19,14 @@ namespace MP3
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             string videoUrl = url_txb.Text; // get the video URL from the text box
 
             try
             {
                 // Create a YouTube video object using the video URL
-                var video = YouTube.Default.GetVideo(videoUrl);
+                var video = await Task.Run(() => YouTube.Default.GetVideo(videoUrl));
 
                 // Get the directory path of the code file
                 string codeDirectory = Path.GetDirectoryName(Application.StartupPath);
@@ -38,9 +38,7 @@ namespace MP3
 
                 // Save the audio to a file in the directory
                 string audioFilePath = Path.Combine(audioDirectory, video.Title + ".mp3");
-                File.WriteAllBytes(audioFilePath, video.GetBytes());
-
-                // Display a success message to the user
+                await Task.Run(() => File.WriteAllBytes(audioFilePath, video.GetBytes()));
             }
             catch (Exception ex)
             {
