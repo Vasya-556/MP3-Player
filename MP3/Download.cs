@@ -25,6 +25,9 @@ namespace MP3
 
             try
             {
+                // Close the window
+                this.Close();
+
                 // Create a YouTube video object using the video URL
                 var video = await Task.Run(() => YouTube.Default.GetVideo(videoUrl));
 
@@ -44,6 +47,9 @@ namespace MP3
             {
                 // Display an error message to the user if the download fails
                 MessageBox.Show("An error occurred while downloading the audio: " + ex.Message, "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Restore the window state
+                this.WindowState = FormWindowState.Normal;
             }
 
         }

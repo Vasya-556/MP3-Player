@@ -26,6 +26,7 @@ namespace MP3
             prev_btn.Click += CentralizedEventHandler1;
             add_btn.Click += CentralizedEventHandler1;
             down_btn.Click += CentralizedEventHandler1;
+            remove_btn.Click += CentralizedEventHandler1;
             audio_progress.MouseDown += TrackBar1_MouseDown;
             audio_progress.MouseUp += TrackBar1_MouseUp;
             volume.Scroll += TrackBar2_Scroll;
@@ -35,6 +36,11 @@ namespace MP3
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
             timer.Start();
+        }
+
+        public ComboBox ComboBox1 // Change access modifier to public
+        {
+            get { return comboBox1; }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -229,6 +235,13 @@ namespace MP3
                 d.Show();
                 d.Activate();
             }
+            else if (sender == remove_btn)
+            {
+                Remove remove = new Remove(this);
+                remove.ShowDialog();
+
+                EnableButtons();
+            }
             else if (sender == next_btn)
             {
                 next_btn.Enabled = false;
@@ -308,6 +321,13 @@ namespace MP3
                 prev_btn.Enabled = true;
             }
         }
+        private void EnableButtons()
+        {
+            bool hasItems = comboBox1.Items.Count > 0;
+            if (!hasItems)
+                label1.Text = "";
+        }
+
         int ModeChange = 1;
         private void button1_Click(object sender, EventArgs e)
         {
@@ -328,6 +348,5 @@ namespace MP3
                 ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
             }
         }
-
     }
 }
