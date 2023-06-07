@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using System.IO;
+using TagLib;
 
 namespace MP3
 {
@@ -31,11 +32,28 @@ namespace MP3
             audio_progress.MouseUp += TrackBar1_MouseUp;
             volume.Scroll += TrackBar2_Scroll;
             comboBox1.SelectedIndexChanged += CentralizedEventHandler1;
+            listBox1.SelectedIndexChanged += CentralizedEventHandler1;
+            Resume_btn.Click += CentralizedEventHandler1;
 
             timer = new Timer();
             timer.Interval = 100;
             timer.Tick += Timer_Tick;
             timer.Start();
+
+            textBox1.ReadOnly = true;
+            textBox2.ReadOnly = true;
+            textBox3.ReadOnly = true;
+            song_name.ReadOnly = true;
+            artist_name.ReadOnly = true;
+            album_name.ReadOnly = true;
+
+            play_chb.BackgroundImageLayout = ImageLayout.Stretch;
+            next_btn.BackgroundImageLayout = ImageLayout.Stretch;
+            prev_btn.BackgroundImageLayout = ImageLayout.Stretch;
+            ModeChange_btn.BackgroundImageLayout = ImageLayout.Stretch;
+            Resume_btn.BackgroundImageLayout = ImageLayout.Stretch;
+            VolMax.BackgroundImageLayout = ImageLayout.Stretch;
+            VolMin.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         public ComboBox ComboBox1 // Change access modifier to public
@@ -125,7 +143,7 @@ namespace MP3
             {
                 if (play_chb.Checked)
                 {
-                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\1.jpg");
+                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\pause.png");
 
                     if (outputDevice == null || outputDevice.PlaybackState == PlaybackState.Stopped)
                     {
@@ -142,10 +160,16 @@ namespace MP3
                             // Start playing the audio
                             outputDevice.Play();
                             
-                            string selectedFilePath = comboBox1.SelectedItem.ToString();
-                            string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
-                            label1.Text = selectedFileName;
                             timer.Start();
+                            string selectedFilePath = comboBox1.SelectedItem.ToString();
+                            TagLib.File file = TagLib.File.Create(selectedFilePath);
+                            string songTitle = file.Tag.Title;
+                            string artist = file.Tag.FirstPerformer;
+                            string album = file.Tag.Album;
+
+                            song_name.Text = songTitle;
+                            artist_name.Text = artist;
+                            album_name.Text = album;
                         }
                     }
                     // Resume playing the audio
@@ -157,7 +181,7 @@ namespace MP3
                 }
                 else
                 {
-                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\2.jpg");
+                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\play.png");
 
                     // Pause the audio playback
                     if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
@@ -191,8 +215,14 @@ namespace MP3
                 if (comboBox1.SelectedItem != null)
                 {
                     string selectedFilePath = comboBox1.SelectedItem.ToString();
-                    string selectedFileName = Path.GetFileNameWithoutExtension(selectedFilePath);
-                    label1.Text = selectedFileName;
+                    TagLib.File file = TagLib.File.Create(selectedFilePath);
+                    string songTitle = file.Tag.Title;
+                    string artist = file.Tag.FirstPerformer;
+                    string album = file.Tag.Album;
+
+                    song_name.Text = songTitle;
+                    artist_name.Text = artist;
+                    album_name.Text = album;
                 }
             }
             else if (sender == add_btn)
@@ -207,19 +237,17 @@ namespace MP3
                 {
                     foreach (string selectedFileName in openFileDialog1.FileNames)
                     {
-                        // Load the new audio file
-                        AudioFileReader audioFile = new AudioFileReader(selectedFileName);
-
-                        // Create a new output device and set its audio source
-                        WaveOutEvent outputDevice = new WaveOutEvent();
-                        outputDevice.Init(audioFile);
-
                         // Add the file path to the ComboBox
                         comboBox1.Items.Add(selectedFileName);
 
-                        // Dispose of the audio file and output device objects
-                        audioFile.Dispose();
-                        outputDevice.Dispose();
+                        // Get song information
+                        TagLib.File file = TagLib.File.Create(selectedFileName);
+                        string songTitle = file.Tag.Title;
+                        string artist = file.Tag.FirstPerformer;
+
+                        // Add song information to the ListBox
+                        string songInfo = $"{songTitle} - {artist}";
+                        listBox1.Items.Add(songInfo);
                     }
 
                     play_chb.Checked = false;
@@ -241,6 +269,18 @@ namespace MP3
                 remove.ShowDialog();
 
                 EnableButtons();
+                listBox1.Items.Clear();
+                foreach (var item in comboBox1.Items)
+                {
+                    // Get song information
+                    TagLib.File file = TagLib.File.Create(item.ToString());
+                    string songTitle = file.Tag.Title;
+                    string artist = file.Tag.FirstPerformer;
+
+                    // Add song information to the ListBox
+                    string songInfo = $"{songTitle} - {artist}";
+                    listBox1.Items.Add(songInfo);
+                }
             }
             else if (sender == next_btn)
             {
@@ -297,7 +337,7 @@ namespace MP3
                         outputDevice.Play();
                     }
                 }
-                else
+                else 
                 {
                     if (comboBox1.Items.Count > 0)
                     {
@@ -320,12 +360,28 @@ namespace MP3
                 next_btn.Enabled = true;
                 prev_btn.Enabled = true;
             }
+            else if (sender == listBox1){
+                if (listBox1.SelectedIndex >= 0 && listBox1.SelectedIndex < comboBox1.Items.Count)
+                {
+                    comboBox1.SelectedIndex = listBox1.SelectedIndex;
+                }
+            }
+            else if (sender == Resume_btn)
+            {
+                if (play_chb.Checked && comboBox1.SelectedItem != null)
+                {
+                    outputDevice.Stop();
+                    audioFile.Position = 0;  // Reset the position to the beginning
+                    outputDevice.Play();
+                }
+            }
         }
         private void EnableButtons()
         {
             bool hasItems = comboBox1.Items.Count > 0;
             if (!hasItems)
-                label1.Text = "";
+                song_name.Text = "";
+            //songname
         }
 
         int ModeChange = 1;
@@ -337,16 +393,17 @@ namespace MP3
 
             if (ModeChange == 1)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\3.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\repeat_current_song.png");
             }
             else if (ModeChange == 2)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\4.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\repeat_current_playlist.png");
             }
             else if (ModeChange == 3)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\ПГІ\C#\Forms\lab-13.1\lab-13.1\5.jpg");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\random.png");
             }
         }
+
     }
 }

@@ -29,36 +29,42 @@ namespace MP3
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Remove));
+            this.Remove_btn = new System.Windows.Forms.Button();
+            this.Remove_List = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
-            // button1
+            // Remove_btn
             // 
-            this.button1.Location = new System.Drawing.Point(414, 371);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Remove";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.Remove_btn.BackColor = System.Drawing.Color.White;
+            this.Remove_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Remove_btn.Location = new System.Drawing.Point(12, 250);
+            this.Remove_btn.Name = "Remove_btn";
+            this.Remove_btn.Size = new System.Drawing.Size(77, 26);
+            this.Remove_btn.TabIndex = 1;
+            this.Remove_btn.Text = "Remove";
+            this.Remove_btn.UseVisualStyleBackColor = false;
+            this.Remove_btn.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // checkedListBox1
+            // Remove_List
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(161, 71);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(138, 225);
-            this.checkedListBox1.TabIndex = 2;
-            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
+            this.Remove_List.FormattingEnabled = true;
+            this.Remove_List.Location = new System.Drawing.Point(10, 10);
+            this.Remove_List.Name = "Remove_List";
+            this.Remove_List.Size = new System.Drawing.Size(521, 225);
+            this.Remove_List.TabIndex = 2;
+            this.Remove_List.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // Remove
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.checkedListBox1);
-            this.Controls.Add(this.button1);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(543, 288);
+            this.Controls.Add(this.Remove_List);
+            this.Controls.Add(this.Remove_btn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Remove";
             this.Text = "Remove";
             this.ResumeLayout(false);
@@ -66,7 +72,7 @@ namespace MP3
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Button Remove_btn;
+        private System.Windows.Forms.CheckedListBox Remove_List;
     }
 }

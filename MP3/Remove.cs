@@ -26,7 +26,7 @@ namespace MP3
             base.OnLoad(e);
             foreach (object item in form1.ComboBox1.Items)
             {
-                checkedListBox1.Items.Add(item);
+                Remove_List.Items.Add(item);
             }
         }
 
@@ -35,7 +35,7 @@ namespace MP3
             List<string> selectedItems = new List<string>();
 
             // Collect the selected songs from the checkedListBox1
-            foreach (var item in checkedListBox1.CheckedItems)
+            foreach (var item in Remove_List.CheckedItems)
             {
                 selectedItems.Add(item.ToString());
             }
@@ -50,10 +50,10 @@ namespace MP3
             if (form1.ComboBox1.Items.Count > 0)
             {
                 // Get the index of the removed song
-                int removedIndex = checkedListBox1.SelectedIndex;
+                int removedIndex = Remove_List.SelectedIndex;
 
                 // If the removed song was the last one, select the previous song
-                if (removedIndex == checkedListBox1.Items.Count - 1)
+                if (removedIndex == Remove_List.Items.Count - 1)
                 {
                     form1.ComboBox1.SelectedIndex = removedIndex - 1;
                 }
@@ -70,7 +70,7 @@ namespace MP3
 
         private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            string selectedItem = checkedListBox1.Items[e.Index].ToString();
+            string selectedItem = Remove_List.Items[e.Index].ToString();
             if (e.NewValue == CheckState.Checked)
             {
                 selectedItems.Add(selectedItem);
