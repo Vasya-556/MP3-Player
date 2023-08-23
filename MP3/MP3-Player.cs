@@ -143,7 +143,7 @@ namespace MP3
             {
                 if (play_chb.Checked)
                 {
-                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\pause.png");
+                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\2\MP3\MP3\icons\pause.png");
 
                     if (outputDevice == null || outputDevice.PlaybackState == PlaybackState.Stopped)
                     {
@@ -181,7 +181,7 @@ namespace MP3
                 }
                 else
                 {
-                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\play.png");
+                    play_chb.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\2\MP3\MP3\icons\play.png");
 
                     // Pause the audio playback
                     if (outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing)
@@ -380,8 +380,11 @@ namespace MP3
         {
             bool hasItems = comboBox1.Items.Count > 0;
             if (!hasItems)
+            {
                 song_name.Text = "";
-            //songname
+                artist_name.Text = "";
+                album_name.Text = "";
+            }
         }
 
         int ModeChange = 1;
@@ -393,15 +396,15 @@ namespace MP3
 
             if (ModeChange == 1)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\repeat_current_song.png");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\2\MP3\MP3\icons\repeat_current_song.png");
             }
             else if (ModeChange == 2)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\repeat_current_playlist.png");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\2\MP3\MP3\icons\repeat_current_playlist.png");
             }
             else if (ModeChange == 3)
             {
-                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\MP3\MP3\icons\random.png");
+                ModeChange_btn.BackgroundImage = Image.FromFile(@"C:\Users\vkobr\OneDrive\Робочий стіл\Coursework\2\MP3\MP3\icons\random.png");
             }
         }
 
