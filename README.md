@@ -1,6 +1,8 @@
 # Cubeex Player
 It's a mp3 player writen on C# and Windows Form
 
+![screenshot](screenshot.png)
+
 ## Table of contents
 - [Cubeex Player](#cubeex-player)
   - [Table of contents](#table-of-contents)
